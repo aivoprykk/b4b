@@ -1,0 +1,131 @@
+#menu {margin:3px 3px;padding:1px;width:754px; background-color:#FE4E37; text-align:center}
+#menu td {background-color:#90140A}
+.item {	width:131px}
+.item a, #menu a {
+display:block; 
+padding:4px 0px;
+font:bold 7pt Verdana, Arial, Helvetica, sans-serif; 
+color:#FFFFFF;
+text-decoration:none
+}
+.item a:hover, #menu a:hover {color:#FFFFFF;background-color:#C01B0E}
+#active {background-color:#FE4E37}
+.c10 { padding: 2px 3px 2px 4px; }
+.d10 { padding: 4px 3px 4px 4px !important; }
+/* yldine ja layout */
+html {height:101%;}
+body {margin: 0%;color: #333;}
+#inFind, #books, .input, body {	font: normal 8pt Verdana, sans-serif;}
+#container {width: 760px;margin: auto; margin-top:10px;text-align: left;  background-color: #FFFFFF; }
+#header {
+	width: 760px;
+	height: 129px;
+	padding: 0px 0px;
+	background: #FFF url(../img/header.gif) no-repeat; border-bottom: 1px solid #999999; 
+}
+#home { display:block; height:70px}
+/* ostingu vorm*/
+#otsing-form {padding-top:7px;}
+#otsing-form table { margin:auto;}
+form { margin: 0px;	padding: 0px;}
+#q {padding:1px 5px;width:80%}
+#otsi {padding: 0px 10px; font-weight: bold}
+#rmt_form {margin:0px;padding:0px 5px 1px 0px;}
+#inFind{height:15px;background-color:#efefef;border:1px solid #888888;}
+#books {width:170px;background-color: #efefef; border:1px solid #888888;}
+
+/*footer*/
+#footer {
+	clear: both;
+	margin-top: 1px;
+	padding: 10px 35px;
+	border-width: 0px;
+	border:1px solid #B1E8FA;	
+	border-top: 1px solid #008AE3;
+	background: #ABE6F9 url(../img/footer-bg.gif) repeat-x;
+	color: #004A7A;
+}
+#footer a {	color:#004A7A;text-decoration: none;}
+#copy {	float:right; padding:7px 0px;}
+
+/*common txt*/
+h1, h2, .pealkiri, .th {font: bold 10pt Georgia, "MS Sans Serif", Geneva, sans-serif; }
+h1, h2{ padding: 7px 3px 3px 3px;}
+h1 {margin: 0px;font-size: 9pt;	border-bottom: 1px solid #C5C5C5;color: #777777;background: #efefef url(../img/h1-bg.gif) repeat-x;}
+h2 {font-size: 8pt;	border-bottom: 1px solid #C5C5C5;margin:0px;}
+/*.th { font-size: 9.5pt; color:#00cccc; background: #fff !important}*/
+.b {font-weight: bold;}
+.s10 {font-size: 10pt;}
+.pealkiri {	padding-left: 20px;	font-size: 12pt;}
+
+/*menu*/
+/*
+.menu {	padding: 1px;}
+.menu li{	display: inline;list-style: none;margin-right: 1px;padding:0px;}
+.menu a {width: 70px;margin: 0px;padding: 2px 7px;background-color: #99CCFF;}*/
+/*LOE*/
+#loe {width: 630px; padding: 15px 128px 25px 0px; border: 1px solid #efefef; border-top-width:0px; font: normal 11pt Georgia,"MS Sans Serif", Geneva, serif;
+	background-color:#F8F8F7;
+	line-height: 1.6em !important;
+	}
+.ptk {float:left;margin-left:-70px;font:bold 24pt Georgia,"MS Sans Serif", Geneva, serif;color:#c1c1c1}
+sup {padding-right: 6px; font: normal 8pt Verdana, sans-serif !important; color: #A0A0A0}
+/*sup a {background-color: #E5E7F4}*/
+sup a {padding-left:3px;  text-decoration: none; color: #01436F; font-weight: bold}
+sup a:hover {background: #D4EBF7}
+.viited {display:none;}
+.viited a {background: none;	padding: 0px 2px;	margin-left: 3px;	 font: bold 8pt Verdana, sans-serif;	border-bottom: 1px solid #01436F}
+/*.viited a:before {content: "/ "}*/
+.viited a:hover {	background: #D4EBF7; border-bottom: 1px solid #92DEF7}
+.tsitaat {padding: 7px 40px 7px 40px; font-style: italic}
+.found  {background-color: #D4EBF7;}
+.salm {font-style:italic;}
+.current {padding:3px; background-color:#D4EBF7}
+.current .found {font-weight:bold;}/*TOOLBAR*/
+.toolbar {
+	margin: 0px;
+	padding: 7px 15px 20px 7px;
+	font: bold 8pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+/*	border-top:1px solid #CCCCFF;*/
+	text-align: center;
+	background-color: #efefef;
+}
+
+.peatykid {
+	display: block;
+	font: normal 8pt Georgia, "MS Serif", "New York", serif;
+}
+
+.peatykid a,.toolbar a{
+	padding: 2px 3px 2px 4px;
+	text-decoration: none;
+	color: #000033;
+}
+.peatykid a:hover {
+	background-color: #D2D2D2; /*#49ACDD*/
+}
+
+.active {
+	padding: 0px 7px !important;
+	padding-bottom: 3px !important;
+	background-color:#CCC;
+/*	
+	background-color:#F8F8F7;
+	border:1px solid #CCC;
+	border-bottom-width: 0px;*/
+	font-size:11pt;
+	color:#333 !important;
+}/*OTSI*/
+#result {width: 640px; padding: 15px 28px 25px 90px; border: 1px solid #efefef; border-top-width:0px; line-height: 2em !important;	font: normal 9pt Georgia,"MS Sans Serif", Geneva, serif;
+	background-color:#F8F8F7;
+	}
+sup {padding-right: 6px; font: normal 8pt Verdana, sans-serif !important; color: #A0A0A0}
+/*sup a {background-color: #E5E7F4}*/
+sup a {padding-left:3px;  text-decoration: none; color: #01436F; font-weight: bold}
+sup a:hover {background: #D4EBF7}
+.found {background: #D4EBF7;}
+.ptk2 { display:block; margin:20px -50px 0px 0px; padding:1px 10px; text-align:right; border-bottom:1px solid #3F61A0; font: bold 11pt Georgia, "MS Serif", "New York", serif; color:#3F61A0;}
+/* --- lemma tabel ---*/
+ul.topic {float:right; width:150px; border:1px solid #CCCCCC; background:#F5F5F5; padding:1px 1px 5px 1px; margin:0px 0px 10px 7px}
+.topic li { font:normal 8pt Verdana; color: #555555; list-style-type:square; list-style-position:inside; padding: 3px 2px 3px 4px}
+li.topic-title {list-style:none; background:#CCCCCC; border-bottom:1px solid #333333; font-weight:bold; padding: 1px}
