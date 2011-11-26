@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Piibel.NET B4</title>
 <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" type="text/css" href="/css/index.css" media="all" />
+<link rel="stylesheet" type="text/css" href="index.css" media="all" />
 </head>
 <body> 
 <!--
@@ -14,36 +14,28 @@
 </div>-->
 <div id="container"> 
 <div id="header">
-
-<table width="100" border="0" cellspacing="1" cellpadding="0" id="menu">
-<tr>
-<td class="item"><a href="/">ESILEHT</a></td>
-<td class="item"><a href="/sisukord.html">PIIBLI SISUKORD</a></td>
-<td class="item"><a href="/?q=random+ptk">JUHUSLIK PEAT&Uuml;KK</a></td> 
-<td class="item"><a href="/?q=random">JUHUSLIK SALM</a></td>
-<td class="item"><a href="http://www.eps.ee/" onclick="return openNew(this.href);">EESTI PIIBLISELTS</a></td> 
-<!--td class="item"><a href="#">VIITED</a></td-->
-<td><a href="/lisainfo.html">LISAINFO</a></td>
-</tr>
-</table>
+<div id="upmenublock">
+<div id="menu">
+<span class="item"><a href="/">ESILEHT</a></span>
+<span class="item"><a href="/sisukord.html">PIIBLI SISUKORD</a></span>
+<span class="item"><a href="/?q=random+ptk">JUHUSLIK PEAT&Uuml;KK</a></span>
+<span class="item"><a href="/?q=random">JUHUSLIK SALM</a></span>
+<span class="item"><a href="http://www.eps.ee/" onclick="return openNew(this.href);">EESTI PIIBLISELTS</a></span>
+<span class="item"><a href="/lisainfo.html">LISAINFO</a></span>
+</div>
+</div>
+<div id="homeblock">
 <a href="/" id="home"></a>
+</div>
+<div id="otsing-form" style="width:70%;margin:auto;"> 
 <form id="form1" method="get" action="/">
-<div id="otsing-form"> 
-<table border="0" cellpadding="0" cellspacing="0">
-<tr id="bible_console">
-<td id="query_input"><label class="b">Otsing: <input name="q" type="text" id="q"  value="" size="40" class="input" tabindex="1"/></label></td>
-<td id="query_button"><input type="button" id="querybutton" value="Otsi" class="input" tabindex="2"/></td>
-<td id="sens_select"><label class="b"><input name="sens" id="sens" type="checkbox" value="0" title="T&otilde;situndlik otsing" tabindex="3"/></label></td>
-<td id="bible_select">
+<span id="query_input" style="width:56%"><label class="b">Otsing: <input name="q" type="text" id="q"  value="" class="input" tabindex="1"/></label></span>
+<span id="query_button" style="width:6%"><input type="button" id="querybutton" value="Otsi" class="input" tabindex="2"/></span>
+<span id="sens_select" style="width:4%"><label class="b"><input name="sens" id="sens" type="checkbox" value="0" title="T&otilde;situndlik otsing" tabindex="3"/></label></span>
+<span id="bible_select" style="width:16%">
 <label class="b"><input id="input_EST_97" type="checkbox" name="EST_97" value="0" title="Eestikeelne piibel 1997" tabindex="4" />97</label>
 <label class="b"><input id="input_EST_68" type="checkbox" name="EST_68" value="0" title="Eestikeelne piibel 1968" tabindex="5" />68</label>
-</td>
-
-<!--td><label class="b"><input name="est_97" id="input_est_97" type="checkbox" value="0"  onclick="bbsel.reg_bv(this.id);piibel.load();" title="1997"/>97</label></td>
-<td><label class="b"><input name="est_68" id="input_est_68" type="checkbox" value="0"  onclick="bbsel.reg_bv(this.id);piibel.load();" title="1968"/>68</label></td-->
-</tr>
-</table>
-</div>
+</span>
 <!--
 <input name="cs" type="hidden" value="UTF-8"/>
 <input name="ptk" type="hidden" value=""/>
@@ -51,6 +43,7 @@
 -->
 </form>
 </div>
+</div> <!-- end header block-->
 <div style="background-color:#C5C5C5;text-align:right;height:0px;">
 <div id="bookdiv" style="visibility:hidden;">
 <form id="form2" method="get" action="/">
@@ -104,7 +97,7 @@
 </div>
 </div>
 <div id="foot_toolbar" class="toolbar" style="clear:both;">
-<span class="peatykid" style="float:left; padding-left:30px">
+<span class="peatykid" style="float:left; padding-left:3em;">
 <span id="numflow2" class="peatykid" style="clear:both; text-align:right;">
 </span>
 </span>
@@ -122,7 +115,8 @@
 //<![CDATA[
 var debug=0;
 var log = function(str){ if(window.debug>0&&console&&console.log){ console.log(str);}};
-$script(['index.min.js','inc/bowser.min.js','inc/emile.min.js'], function(){var p=window.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+if(debug) $script(['index.js','inc/bowser.js','inc/emile.js'], function(){var p=window.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+else $script(['index.min.js','inc/bowser.min.js','inc/emile.min.js'], function(){var p=window.piibel;p.preload();p.hashstr.poll_hash(0,1);})
 
 var __onenter = function(evt) {
     evt = (evt) ? evt : event;

@@ -1,34 +1,90 @@
-#menu {margin:3px 3px;padding:1px;width:754px; background-color:#FE4E37; text-align:center}
-#menu td {background-color:#90140A}
-.item {	width:131px}
+#menu {
+  position:relative;
+  margin-top:2px;
+  padding:0%;
+  width:100%;
+  background-color:#FE4E37;
+  text-align:center;
+  white-space:nowrap;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+#menu li {
+  background-color:#90140A;
+  float:left;
+  white-space:nowrap;
+  overflow:hidden;
+}
+#menu ul {
+  margin:1px;1px;
+  padding:1px;
+}
+.item {
+  display:inline;
+  width:16.4%;
+  margin-left: 2px;
+  margin-top:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  background-color:#90140A;
+  float:left;
+}
 .item a, #menu a {
-display:block; 
-padding:4px 0px;
-font:bold 7pt Verdana, Arial, Helvetica, sans-serif; 
-color:#FFFFFF;
-text-decoration:none
+  display:block; 
+  padding:4px 0px;
+  font:bold 7pt Verdana, Arial, Helvetica, sans-serif; 
+  color:#FFFFFF;
+  text-decoration:none
 }
 .item a:hover, #menu a:hover {color:#FFFFFF;background-color:#C01B0E}
 #active {background-color:#FE4E37}
 .c10 { padding: 2px 3px 2px 4px; }
 .d10 { padding: 4px 3px 4px 4px !important; }
 /* yldine ja layout */
-html {height:101%;}
+html {height:100%;}
 body {margin: 0%;color: #333;}
 #inFind, #books, .input, body {	font: normal 8pt Verdana, sans-serif;}
-#container {width: 760px;margin: auto; margin-top:10px;text-align: left;  background-color: #FFFFFF; }
-#header {
-	width: 760px;
-	height: 129px;
-	padding: 0px 0px;
-	background: #FFF url(../img/header.gif) no-repeat; border-bottom: 1px solid #999999; 
+#container {
+  position: static;
+  max-width: 760px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top:10px;
+  text-align: left;
+  background-color: #FFFFFF;
 }
-#home { display:block; height:70px}
+#header {
+  position:static;
+  width: 100%;
+  height: 129px;
+  padding: 0%;
+  background: #FFF url(../img/header.gif) top left no-repeat;
+  border-bottom: 1px solid #999999; 
+}
+#upmenublock {
+  position: relative;
+  width:99.3%;
+  height:25px;
+  padding-top:1px;
+  padding-bottom:1px;
+  overflow:hidden;
+  white-space:nowrap;
+  margin:auto;
+}
+#homeblock {
+  position:static;
+  height:70px;
+  margin-top:8px;
+}
+#home {
+  display:block;
+  height:70px;
+}
 /* ostingu vorm*/
-#otsing-form {padding-top:7px;}
-#otsing-form table { margin:auto;}
-form { margin: 0px;	padding: 0px;}
-#q {padding:1px 5px;width:80%}
+#otsing-form {padding-top:2px;margin:auto;white-space:nowrap;}
+form { margin: 0px;padding: 0px;}
+#q {padding:1px 5px;width:50%}
 #otsi {padding: 0px 10px; font-weight: bold}
 #rmt_form {margin:0px;padding:0px 5px 1px 0px;}
 #inFind{height:15px;background-color:#efefef;border:1px solid #888888;}
@@ -56,7 +112,11 @@ h2 {font-size: 8pt;	border-bottom: 1px solid #C5C5C5;margin:0px;}
 /*.th { font-size: 9.5pt; color:#00cccc; background: #fff !important}*/
 .b {font-weight: bold;}
 .s10 {font-size: 10pt;}
-.pealkiri {	padding-left: 20px;	font-size: 12pt;}
+.pealkiri {
+  white-space:nowrap;
+  padding-left: 1.4em;
+  font-size: 12pt;
+}
 
 /*menu*/
 /*
@@ -64,11 +124,21 @@ h2 {font-size: 8pt;	border-bottom: 1px solid #C5C5C5;margin:0px;}
 .menu li{	display: inline;list-style: none;margin-right: 1px;padding:0px;}
 .menu a {width: 70px;margin: 0px;padding: 2px 7px;background-color: #99CCFF;}*/
 /*LOE*/
-#loe {width: 630px; padding: 15px 128px 25px 0px; border: 1px solid #efefef; border-top-width:0px; font: normal 11pt Georgia,"MS Sans Serif", Geneva, serif;
-	background-color:#F8F8F7;
-	line-height: 1.6em !important;
-	}
-.ptk {float:left;margin-left:-70px;font:bold 24pt Georgia,"MS Sans Serif", Geneva, serif;color:#c1c1c1}
+#loe {
+  width: 82.8%;
+  padding: 15px 16.8% 25px 0px;
+  border: 1px solid #efefef;
+  border-top-width:0px;
+  font: normal 11pt Georgia,"MS Sans Serif", Geneva, serif;
+  background-color:#F8F8F7;
+  line-height: 1.6em !important;
+}
+.ptk {
+  float:left;
+  margin-left:-18%;
+  font:bold 24pt Georgia,"MS Sans Serif", Geneva, serif;
+  color:#c1c1c1
+}
 sup {padding-right: 6px; font: normal 8pt Verdana, sans-serif !important; color: #A0A0A0}
 /*sup a {background-color: #E5E7F4}*/
 sup a {padding-left:3px;  text-decoration: none; color: #01436F; font-weight: bold}
@@ -116,16 +186,31 @@ sup a:hover {background: #D4EBF7}
 	font-size:11pt;
 	color:#333 !important;
 }/*OTSI*/
-#result {width: 640px; padding: 15px 28px 25px 90px; border: 1px solid #efefef; border-top-width:0px; line-height: 2em !important;	font: normal 9pt Georgia,"MS Sans Serif", Geneva, serif;
-	background-color:#F8F8F7;
-	}
+#result {
+  width: 640px;
+  padding: 15px 28px 25px 90px;
+  border: 1px solid #efefef;
+  border-top-width:0px;
+  line-height: 2em !important;
+  font: normal 9pt Georgia,"MS Sans Serif", Geneva, serif;
+  background-color:#F8F8F7;
+}
 sup {padding-right: 6px; font: normal 8pt Verdana, sans-serif !important; color: #A0A0A0}
 /*sup a {background-color: #E5E7F4}*/
 sup a {padding-left:3px;  text-decoration: none; color: #01436F; font-weight: bold}
 sup a:hover {background: #D4EBF7}
 .found {background: #D4EBF7;}
-.ptk2 { display:block; margin:20px -50px 0px 0px; padding:1px 10px; text-align:right; border-bottom:1px solid #3F61A0; font: bold 11pt Georgia, "MS Serif", "New York", serif; color:#3F61A0;}
+.ptk2 {
+  display:block;
+  margin:20px -30% 0px 0px;
+  padding:1px 10px;
+  text-align:right;
+  border-bottom:1px solid #3F61A0;
+  font: bold 11pt Georgia, "MS Serif", "New York", serif;
+  color:#3F61A0;
+}
 /* --- lemma tabel ---*/
 ul.topic {float:right; width:150px; border:1px solid #CCCCCC; background:#F5F5F5; padding:1px 1px 5px 1px; margin:0px 0px 10px 7px}
 .topic li { font:normal 8pt Verdana; color: #555555; list-style-type:square; list-style-position:inside; padding: 3px 2px 3px 4px}
 li.topic-title {list-style:none; background:#CCCCCC; border-bottom:1px solid #333333; font-weight:bold; padding: 1px}
+

@@ -1,7 +1,4 @@
 /**
- * Skriptid.js
- * for ilm.
- * by Aivo Prükk
 **/
 function $__(e){if(typeof e=='string'){e=(document.layers&&document.layers[e])?document.layers[e]:((document.getElementById)?document.getElementById(e):null);}return e;}
 
@@ -476,7 +473,7 @@ piibel.loadXML = (function(){
           cn.appendChild(sw);
           }
           //cn=$__(bname);
-          sw2=((cols>1)?((col>1)?'padding-left: 250px;':'')+'width: 230px;':'width: 480px;')+'margin-left:130px;position:absolute;'
+          sw2=((cols>1)?((col>1)?'padding-left: 40%;':'')+'width: 37%;':'width: 77%;')+'margin-left:23%;position:absolute;'
           t.addStyle(cn,sw2);
           //cn.style.cssText=sw2;
         }
@@ -498,6 +495,7 @@ piibel.loadXML = (function(){
               rn.innerHTML='<a href="#" onclick="$__(\'q\').value=piibel.state.q=\''+curbook+'+'+curchapter+'\';return piibel.load();">'+curbook+' '+curchapter+"</a>\n";
             } else if(col<2) {
               rn.setAttribute('class','ptk');
+              rn.setAttribute('style','margin-left:-'+((cols>1)?'37.5':'17')+'%;');
               rn.innerHTML=bname;
             }
             cn.appendChild(rn);
