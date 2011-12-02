@@ -15,19 +15,19 @@
 <div id="container"> 
 <div id="header">
 <div id="upmenublock">
-<div id="menu">
-<span class="item"><a href="/">ESILEHT</a></span>
-<span class="item"><a href="/sisukord.html">PIIBLI SISUKORD</a></span>
-<span class="item"><a href="/?q=random+ptk">JUHUSLIK PEAT&Uuml;KK</a></span>
-<span class="item"><a href="/?q=random">JUHUSLIK SALM</a></span>
-<span class="item"><a href="http://www.eps.ee/" onclick="return openNew(this.href);">EESTI PIIBLISELTS</a></span>
-<span class="item"><a href="/lisainfo.html">LISAINFO</a></span>
-</div>
+<ul id="menu">
+<li class="item"><a href="/">ESILEHT</a></li>
+<li class="item"><a href="/sisukord.html">PIIBLI SISUKORD</a></li>
+<li class="item"><a href="/?q=random+ptk">JUHUSLIK PEAT&Uuml;KK</a></li>
+<li class="item"><a href="/?q=random">JUHUSLIK SALM</a></li>
+<li class="item"><a href="http://www.eps.ee/" onclick="return openNew(this.href);">EESTI PIIBLISELTS</a></li>
+<li class="item"><a href="/lisainfo.html">LISAINFO </a></li>
+</ul>
 </div>
 <div id="homeblock">
 <a href="/" id="home"></a>
 </div>
-<div id="otsing-form" style="width:70%;margin:auto;"> 
+<div id="otsing-form"> 
 <form id="form1" method="get" action="/">
 <span id="query_input" style="width:56%"><label class="b">Otsing: <input name="q" type="text" id="q"  value="" class="input" tabindex="1"/></label></span>
 <span id="query_button" style="width:6%"><input type="button" id="querybutton" value="Otsi" class="input" tabindex="2"/></span>
@@ -72,7 +72,7 @@
 <span id="booktitle" class="pealkiri"><!--Esimene Moosese raamat--></span>
 
 <span id="numflow1" class="peatykid" style="clear:both; text-align:right;">
-<span style="padding-right:8em;">
+<span style="padding-right:10%">
 <span class="d10">«</span>
 <span class="d10">eelmine</span>
 <a class="active b s10" href="#">&nbsp;1</a>
@@ -85,8 +85,8 @@
 </h1>
 </div>
 <div id="waiting" style="height:60px;padding:10px;text-align:center;display:none;position:fixed;"><img height="30" alt="waiting" src="/img/waiting1.gif" /></div>
-<div id="loe" style="position:relative;">
-<div id="scrolldiv" style="position:relative;overflow:hidden;">
+<div id="loe">
+<div id="scrolldiv">
 <div id="bibles">
 <!--div id="bible1" style="width: 20em;position:absolute;">
 <div class="row"><span class="v"><a name="1"></a>1&nbsp;</span>Alguses lõi Jumal taeva ja maa.</div>
@@ -97,7 +97,7 @@
 </div>
 </div>
 <div id="foot_toolbar" class="toolbar" style="clear:both;">
-<span class="peatykid" style="float:left; padding-left:3em;">
+<span class="peatykid" style="float:left;margin-left:3.5%">
 <span id="numflow2" class="peatykid" style="clear:both; text-align:right;">
 </span>
 </span>
@@ -114,14 +114,15 @@
 <script type="text/javascript">
 //<![CDATA[
 var debug=0;
+if(window.location.pathname.match(/debug/)) debug=1;
 var log = function(str){ if(window.debug>0&&console&&console.log){ console.log(str);}};
-if(debug) $script(['index.js','inc/bowser.js','inc/emile.js'], function(){var p=window.piibel;p.preload();p.hashstr.poll_hash(0,1);})
-else $script(['index.min.js','inc/bowser.min.js','inc/emile.min.js'], function(){var p=window.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+if(debug) $script(['index.js','inc/bowser.js','inc/emile.js'], function(){var p=window.net.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+else $script(['index.min.js','inc/bowser.min.js','inc/emile.min.js'], function(){var p=window.net.piibel;p.preload();p.hashstr.poll_hash(0,1);})
 
 var __onenter = function(evt) {
     evt = (evt) ? evt : event;
     var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
-    if (charCode == 13) { piibel.state.page=0;piibel.load(); return false; }
+    if (charCode == 13) { net.piibel.state.page=0;net.piibel.load(); return false; }
     return true;
 };
 var $___= function(e){
@@ -129,7 +130,8 @@ var $___= function(e){
     var l=m.length;
     if(l>1){
         log("e:"+e+",l:"+l+",m:"+m);
-        if(l>2&& m[2]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]])?window[m[0]][m[1]][m[2]]:null; }
+        if(l>3&& m[3]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]]&&window[m[0]][m[1]][m[2]][m[3]])?window[m[0]][m[1]][m[2]][m[3]]:null; }
+        else if(l>2&& m[2]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]])?window[m[0]][m[1]][m[2]]:null; }
         else if(l>1 && m[1]){ return (window[m[0]]&&window[m[0]][m[1]])?window[m[0]][m[1]]:null; }
         else {                return (m[0]&&window[m[0]])?window[m[0]]:null;}
     }

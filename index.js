@@ -1,4 +1,5 @@
 /**
+Piibel.NET client functions.
 **/
 function $__(e){if(typeof e=='string'){e=(document.layers&&document.layers[e])?document.layers[e]:((document.getElementById)?document.getElementById(e):null);}return e;}
 
@@ -8,43 +9,6 @@ ajax={
   send: function(u,f,m,v,t,c){ var x=ajax.x();x.open(m,u,true);x.onreadystatechange=function(){if(x.readyState==4){f(x['response'+(t||Text)],c);}};x.send(v);},
   load: function(u,j,t,c){var f=function(){ajax.send(u,j,'GET',null,t,c);};return setTimeout(f,0);}
 };
-
-
-var odump = (function(){
-  var max, INDENT = "                                   "; // As long as you need :)
-  
-  function valueToStr(value, depth) {
-    switch (typeof value) {
-      case "object":   return objectToStr(value, depth + 1);
-      case "function": return "function";
-      default:         return value;
-    }
-  }
-  function objectToStr(object, depth) {
-    if (depth > max){return false;}
-    var output = "";
-    var key=null;
-    for (key in object){ 
-     output += "\n" + INDENT.substr(0,2*depth) + key + ": " + valueToStr(object[key], depth);
-    }
-    return output; 
-  }
-  return function odump(object, depth, _max) {
-    max = _max || 2;
-    return objectToStr(object, depth || 0);
-  };
-
-})();
-
-if(!Object.keys) {
- Object.keys = function(o){
-   if (o !== Object(o))
-      throw new TypeError('Object.keys called on non-object');
-   var ret=[],p;
-   for(p in o) if(Object.prototype.hasOwnProperty.call(o,p)) ret.push(p);
-   return ret;
- };
-}
 
 var load = (function() {
  var oo=function(e){
@@ -58,8 +22,9 @@ var load = (function() {
   var s=o['url'],p=o['result'];
   var type=typeof(s);
   if(s&&type==='string'){
-    var t=s.split(/\./);
-    if(t[1]&&window[t[0]])return window[t[0]][t[1]]=p[t[1]];
+ var t=s.split(/\./);
+    if(t[2]&&window[t[0]][t[1]]) return window[t[0]][t[1]][t[2]]=p[t[2]];
+    else if(t[1]&&window[t[0]])return window[t[0]][t[1]]=p[t[1]];
     return window[s]=p[s]?p[s]:o;
   }
   if(type==='object'){return s=p;}
@@ -75,15 +40,16 @@ var load = (function() {
  };
 })();
 
-//ajax.load('/b2/?t=json&q=Jh+1,1;',load,'Text',function(o){return null;});
 /*
+ajax.load('/b2/?t=json&q=Jh+1,1;',load,'Text',function(o){return null;});
 ajax.send('/b2/?q=Jh+1,1',load,'GET',null,'XML');
 ajax.send('/b2/?bbs=1&t=json',load,'GET',null,'Text');
 ajax.send('/b2/?bbs=1&t=xml',load,'GET',null,'XML');
 */
 
-
-var piibel={
+if(!net) var net={};
+if(!net.piibel) net.piibel={};
+net.piibel={
   history:[],
   context: {
     page_loaded: 0,
@@ -123,17 +89,14 @@ var piibel={
     page_slide_len: 700,
     page_slide_enabled:1
   },
-  //books: {},
-  //bibles: {},
-
   preload: function(){
-    var t=(this.context)?this:window.piibel;
+    var t=(this.context)?this:window.net.piibel;
     t.context.active_uri='';
     t.loadb();
     log(new Date().getTime()+" preload done");
   },
   loadb: function(b){
-    var t=(this.context)?this:window.piibel;
+    var t=(this.context)?this:window.net.piibel;
     var loaded=function(){
         if(t.books[66].abbr===''){ t.books.splice(66,1); }
         t.books.splice(66,0,{'id':680,'name':'------- Apokriivad ---','abbr':'apk'});
@@ -144,9 +107,9 @@ var piibel={
         controls.mainform.biblescontrol("show");
         t.context['bibles_loaded']=1;
     };
-    ajax.load('/b2/?xbb=1&lang=et&t=json',window.load,'Text',["piibel.books","piibel.bibles"]);
-    ajax.load('/b2/?t=json',window.load,'Text',"piibel.result");
-    window.c_('piibel.bibles',function(){loaded();});
+    ajax.load('/b2/?xbb=1&lang=et&t=json',window.load,'Text',["net.piibel.books","net.piibel.bibles"]);
+    ajax.load('/b2/?t=json',window.load,'Text',"net.piibel.result");
+    window.c_('net.piibel.bibles',function(){loaded();});
   },
   benchmark: function(callback, times) {
     var start = Date.now();
@@ -158,7 +121,7 @@ var piibel={
   },
   load: function(u){
     var uri='',url='';
-    var t=(this.context)?this:window.piibel;
+    var t=(this.context)?this:window.net.piibel;
     var s=t.state;
     var c=t.context;
     var h='',i='',p=c.hist_pos;
@@ -193,7 +156,7 @@ var piibel={
         //$__('bibles').innerHTML='<div id="waiting" style="height:50px;text-align:center;"><img height="50" alt="waiting" src="/img/waiting1.gif" /></div>';
         ajax.load(url,t.loadXML,'XML');
       } else {
-        c.slide_dir=piibel.slidesel(c.hist_pos,p);
+        c.slide_dir=net.piibel.slidesel(c.hist_pos,p);
         s.bookt=i.btitle;
         s.bookn=i.bname;
         s.booki=i.bid;
@@ -208,12 +171,18 @@ var piibel={
     }
     if(t.rows) { setSelect("rows",t.rows); }
     //while(bbsel.update_bv()==true){ setTimeout(bbsel.update_bv,500); }
-    if(!c.page_loaded){c_('piibel.context.page_loaded',function(){var q=$__('q');$__('waiting').style.display="none";if(q.value!=s.q){q.value=s.q;}t.unlock();});}
+    if(!c.page_loaded){
+      c_('net.piibel.context.page_loaded',function(){
+          var q=$__('q');
+          if(q.value!=s.q){q.value=s.q;}t.unlock();
+        }
+      );
+    }
     else if(c.page_loaded) { t.unlock(); }
     return false;
   },
   lock: function(){
-    var t=(this.context)?this:window.piibel;
+    var t=(this.context)?this:window.net.piibel;
     var c=t.context;
     if(c.locked==1) { return false; }
     else { c.locked=1; }
@@ -221,14 +190,14 @@ var piibel={
     return true;
   },
   unlock: function(){
-    var t=(this.context)?this:window.piibel;
+    var t=(this.context)?this:window.net.piibel;
     t.context.locked=0;
     t.hashstr.poll();
     return true;
   },
   update_querystr: function(str){
     var url='',bv='',i=0;
-    var t=(this.state)?this.state:window.piibel.state;
+    var t=(this.state)?this.state:window.net.piibel.state;
     if(!str || str==='#') { str=''; }
     log("update_querystr:"+str);
     if(t.bv.length) { bv=t.bv.join('&bv='); }
@@ -253,7 +222,7 @@ var piibel={
   },
   update_request: function(str){
     var p=(str&&str!=='#')?str:(window.location.hash)?window.location.hash:window.location.search;
-    var t=(this.context)?this:window.piibel;
+    var t=(this.context)?this:window.net.piibel;
     var b=t.bibles||null;
     var s=t.state;
     var c=t.context;
@@ -306,105 +275,103 @@ var piibel={
     //console.log(window.location.host+window.location.pathname+window.location.hash);
     //window.location.replace=window.location.host+window.location.pathname+window.location.hash;
     return false;
-  }
-};
-
-piibel.slidesel=function(cur,prev){
-  var d="",t=piibel.history,c=piibel.context;
-  var i=t[cur];
-  var p=t[prev];
-  if(piibel.state.page_slide_enabled==0){ d="pop";}
-  else if(!p||p.bid==i.bid||!p.bid||!i.bid) {
-    if(!p||(p.bid&&!i.bid)||(!p.bid&&i.bid)||p.page==i.page||(!p.bid&&!i.bid&&p.q!=i.q)) { d="pop";}
-    else if(p.page<i.page) {d="rl"; }
-    else if(p.page>i.page) {d="lr"; }
-  }
-  else if(p.bid<i.bid) {d="rl"; }
-  else if(p.bid>i.bid) {d="lr"; }
-  return d;
-};
-
-piibel.rebuild=function(n){
-  var t=(this.state)?this:window.piibel;
-  var s=t.state;
-  var c=t.context;
-  var sw=null,sw2='';
-  var slide_r_to_l=function(next){ var l=s.page_slide_len;return slide_em(c.active_div,next,'left:-'+l+'px;','left:'+l+'px;','left:0px;');};
-  var slide_l_to_r=function(next){ var l=s.page_slide_len;return slide_em(c.active_div,next,'left:'+l+'px;','left:-'+l+'px;','left:0px;');};
-  var slide_em=function(curr,next,curr_stop_pos,next_start_pos,next_stop_pos){ 
-    var c=$__(curr),n=$__(next);
-    emile(next,next_start_pos+((next.style.visibility=='hidden')?'opacity:1;':''),{setstyle:1});
-    if(!$__(next.id)) { $__('scrolldiv').appendChild(next); };
-    emile(curr,curr_stop_pos,{duration:s.page_slide_time});
-    emile(next,next_stop_pos,{duration:s.page_slide_time});
-    return true;
-  };
-  var change_no_slide=function(curr,next){
-    next.style.visibility='hidden';
-    emile(next,'left:0px;opacity:0;',{setstyle:1});
-    if(!c.active_div||c.active_div=='bibles') { $__('scrolldiv').replaceChild(next,$__('bibles')); }
-    else if(!$__(next.id)) { $__('scrolldiv').appendChild(next); }
-    if($__(curr)) {
-      emile(curr,'opacity:0;',{duration:s.page_slide_time});
-      emile(curr,'left:-'+s.page_slide_len+'px;',{setstyle:1});
+  },
+  slidesel: function(cur,prev){
+    var d="",t=net.piibel.history,c=net.piibel.context;
+    var i=t[cur];
+    var p=t[prev];
+    if(net.piibel.state.page_slide_enabled==0){ d="pop";}
+    else if(!p||p.bid==i.bid||!p.bid||!i.bid) {
+      if(!p||(p.bid&&!i.bid)||(!p.bid&&i.bid)||p.page==i.page||(!p.bid&&!i.bid&&p.q!=i.q)) { d="pop";}
+      else if(p.page<i.page) {d="rl"; }
+      else if(p.page>i.page) {d="lr"; }
     }
-    emile(next,'opacity:1;',{duration:s.page_slide_time});
-    return true;
-  }
+    else if(p.bid<i.bid) {d="rl"; }
+    else if(p.bid>i.bid) {d="lr"; }
+    return d;
+  },
+  rebuild: function(n){
+    var t=(this.state)?this:window.net.piibel;
+    var s=t.state;
+    var c=t.context;
+    var sw=null,sw2='';
+    var slide_r_to_l=function(next){ var l=s.page_slide_len;return slide_em(c.active_div,next,'left:-'+l+'px;','left:'+l+'px;','left:0px;');};
+    var slide_l_to_r=function(next){ var l=s.page_slide_len;return slide_em(c.active_div,next,'left:'+l+'px;','left:-'+l+'px;','left:0px;');};
+    var slide_em=function(curr,next,curr_stop_pos,next_start_pos,next_stop_pos){ 
+      var c=$__(curr),n=$__(next);
+      emile(next,next_start_pos+((next.style.visibility=='hidden')?'opacity:1;':''),{setstyle:1});
+      if(!$__(next.id)) { $__('scrolldiv').appendChild(next); };
+      emile(curr,curr_stop_pos,{duration:s.page_slide_time});
+      emile(next,next_stop_pos,{duration:s.page_slide_time});
+      return true;
+    };
+    var change_no_slide=function(curr,next){
+      next.style.visibility='hidden';
+      emile(next,'left:0px;opacity:0;',{setstyle:1});
+      if(!c.active_div||c.active_div=='bibles') { $__('scrolldiv').replaceChild(next,$__('bibles')); }
+      else if(!$__(next.id)) { $__('scrolldiv').appendChild(next); }
+      if($__(curr)) {
+        emile(curr,'opacity:0;',{duration:s.page_slide_time});
+        emile(curr,'left:-'+s.page_slide_len+'px;',{setstyle:1});
+      }
+      emile(next,'opacity:1;',{duration:s.page_slide_time});
+      return true;
+    }
+
+    //if($__('hh1_sub').style.visibility!='hidden') { emile('hh1_sub','opacity:0;',{duration:1500}); }
+    controls.navmenu.bookflow(1);
+    controls.navmenu.pageflow(1);
+    controls.navmenu.pageflow(2);
+    //show_navig();
+    if(s.mode==='ptk'&&!s.rows){ s.page=0; }
+    //fade('booktitle','out');
+    sw=$__('booktitle');
+    sw2=(s.mode==='ptk')?s.bookt:'Otsingu "'+s.q+'" tulemus';
+    if(sw.innerHTML!=sw2){ sw.innerHTML=sw2; }
+    $__('numflowend').innerHTML=((s.mode==='ptk')?'peat&uuml;kk':'leitud '+s.count+' vastet');
+    if($__('hh1_sub').style.visibility=='hidden') { emile('hh1_sub','opacity:1;'); }
+    sw=$__('scrolldiv');
+    if(c.slide_dir=="rl"){ slide_r_to_l(n); }
+    else if(c.slide_dir=="lr"){ slide_l_to_r(n); }
+    else { change_no_slide(c.active_div||'bibles',n); }
+    c.active_div=n.id;
     
-        //if($__('hh1_sub').style.visibility!='hidden') { emile('hh1_sub','opacity:0;',{duration:1500}); }
-        controls.navmenu.bookflow(1);
-        controls.navmenu.pageflow(1);
-        controls.navmenu.pageflow(2);
-        //show_navig();
-        if(s.mode==='ptk'&&!s.rows){ s.page=0; }
-        //fade('booktitle','out');
-        sw=$__('booktitle');
-        sw2=(s.mode==='ptk')?s.bookt:'Otsingu "'+s.q+'" tulemus';
-        if(sw.innerHTML!=sw2){ sw.innerHTML=sw2; }
-        $__('numflowend').innerHTML=((s.mode==='ptk')?'peat&uuml;kk':'leitud '+s.count+' vastet');
-        if($__('hh1_sub').style.visibility=='hidden') { emile('hh1_sub','opacity:1;'); }
-        sw=$__('scrolldiv');
-        if(c.slide_dir=="rl"){ slide_r_to_l(n); }
-        else if(c.slide_dir=="lr"){ slide_l_to_r(n); }
-        else { change_no_slide(c.active_div||'bibles',n); }
-        c.active_div=n.id;
-        
-        sw=$__(c.active_div);
-        var sh=sw.offsetHeight;
-        for(var k=null,i=0,j=t.bibles.length;i<j;i++){
-          if(!t.bibles[i]){continue;}
-          sw2=t.bibles[i].id;
-          k=$__(sw2+'-'+c.active_div);
-          if(sw2 && k!==null){
-            sh=(k.offsetHeight>sh)?k.offsetHeight:sh;
-            log("test:"+sw2+" "+k+" "+sh);
-          }
-        }
-        emile('scrolldiv','height:'+sh+'px;',{setstyle:1});
+    sw=$__(c.active_div);
+    var sh=sw.offsetHeight;
+    for(var k=null,i=0,j=t.bibles.length;i<j;i++){
+      if(!t.bibles[i]){continue;}
+      sw2=t.bibles[i].id;
+      k=$__(sw2+'-'+c.active_div);
+      if(sw2 && k!==null){
+        sh=(k.offsetHeight>sh)?k.offsetHeight:sh;
+        log("test:"+sw2+" "+k+" "+sh);
+      }
+    }
+    emile('scrolldiv','height:'+sh+'px;',{setstyle:1});
 
-        $__('foot_toolbar').style.visibility='';
-        $__('footer').style.visibility='';
-        //curheight=null;
-        if(s.goy!==null){ scroll("y",s.goy,1); s.goy=null;}
-        if(!c.back_lock&&c.active_uri){
-          log("change location hash to:"+c.active_uri);
-          window.location.hash=encodeURI(c.active_uri);
-        }
-        c.page_loaded=1;
-        /*
-        var ff=function(){fade.fIn('bibles',0);};
-        var fg=function(){fade2('bibles','fIn',0);};
-        var fa=piibel.benchmark(ff,500);
-        console.log("testime fade kiirust, 500 tehingu jaoks kulub:"+(fa/100)+"sek.");
-        var fb=piibel.benchmark(fg,500);
-        console.log("testime fade2 kiirust, 500 tehingu jaoks kulub:"+(fb/100)+"sek.");
-        */
-        if(s.locked){ t.unlock(); }
-        return 1;
-};
+    $__('foot_toolbar').style.visibility='';
+    $__('footer').style.visibility='';
+    //curheight=null;
+    if(s.goy!==null){ scroll("y",s.goy,1); s.goy=null;}
+    if(!c.back_lock&&c.active_uri){
+      log("change location hash to:"+c.active_uri);
+      window.location.hash=encodeURI(c.active_uri);
+    }
+    c.page_loaded=1;
+    /*
+    var ff=function(){fade.fIn('bibles',0);};
+    var fg=function(){fade2('bibles','fIn',0);};
+    var fa=piibel.benchmark(ff,500);
+    console.log("testime fade kiirust, 500 tehingu jaoks kulub:"+(fa/100)+"sek.");
+    var fb=piibel.benchmark(fg,500);
+    console.log("testime fade2 kiirust, 500 tehingu jaoks kulub:"+(fb/100)+"sek.");
+    */
+    $__('waiting').style.display="none";
+    if(s.locked){ t.unlock(); }
+    return 1;
+  },
 
-piibel.addStyle = function(el,str){
+  addStyle: function(el,str){
       var cssString = str;
       if( typeof(el.style.cssText) == 'string' ) {
         cssString+=el.style.cssText;
@@ -414,183 +381,182 @@ piibel.addStyle = function(el,str){
       cssString+=el.getAttribute('style');
       el.setAttribute('style',cssString);
       return false;
-};
+  },
 
-piibel.loadXML = (function(){
-  var t=(this.state)?this:window.piibel;
-  var s=t.state;
-  var c=t.context;
-  var cn=null,cols=null,col=null;
-  var curbible=null,curchapter=null,curverse=null,curbook=null,curheading=null;
-  var newnode=null;
-  var xmlload = function(xml){
-    var i=0,j=0,k=null,sw2='';
-    var sw=null,a=null,f=null,attr=[];
-    var bname=null;
-    var n=xml.nodeName;
-    var typ=xml.nodeType;
-    var v=xml.nodeValue;
-    var p=xml.parentNode;
-    if(p!==undefined && p!==null){
-      if(typ==1){
-        if(n=='result'){
-          //reset values:
-          cn=null;
-          col=0;
-          s.bookt='';s.bookn='';s.count=0;s.pages=0;s.page=0;
-          cols=curbible=curchapter=curverse=curbook=curheading=null;
-          t.history[c.hist_pos].mode=s.mode=xml.getAttribute('list_mode');
-          newnode=document.createElement("div");
-          newnode.setAttribute('id',c.next_div);
-          newnode.setAttribute('style','position:relative;');
-          sw2=xml.getAttribute('find');
-          t.history[c.hist_pos].find=s.find=(sw2)?sw2:'';
-          sw2=xml.getAttribute('q');
-          t.history[c.hist_pos].q=s.q=(sw2)?sw2:'';
-          for(i=0,j=xml.childNodes.length;i<j;i++) { 
-            if(xml.childNodes[i].nodeName=='bible') {
-              cols++;
+  loadXML: (function(){
+    var t=(this.state)?this:window.net.piibel;
+    var s=t.state;
+    var c=t.context;
+    var cn=null,cols=null,col=null;
+    var curbible=null,curchapter=null,curverse=null,curbook=null,curheading=null;
+    var newnode=null;
+    var xmlload = function(xml){
+      var i=0,j=0,k=null,sw2='';
+      var sw=null,a=null,f=null,attr=[];
+      var bname=null;
+      var n=xml.nodeName;
+      var typ=xml.nodeType;
+      var v=xml.nodeValue;
+      var p=xml.parentNode;
+      if(p!==undefined && p!==null){
+        if(typ==1){
+          if(n=='result'){
+            //reset values:
+            cn=null;
+            col=0;
+            s.bookt='';s.bookn='';s.count=0;s.pages=0;s.page=0;
+            cols=curbible=curchapter=curverse=curbook=curheading=null;
+            t.history[c.hist_pos].mode=s.mode=xml.getAttribute('list_mode');
+            newnode=document.createElement("div");
+            newnode.setAttribute('id',c.next_div);
+            newnode.setAttribute('style','position:relative;');
+            sw2=xml.getAttribute('find');
+            t.history[c.hist_pos].find=s.find=(sw2)?sw2:'';
+            sw2=xml.getAttribute('q');
+            t.history[c.hist_pos].q=s.q=(sw2)?sw2:'';
+            for(i=0,j=xml.childNodes.length;i<j;i++) { 
+              if(xml.childNodes[i].nodeName=='bible') {
+                cols++;
+              }
+            }
+          }
+          if(n=='bible'){
+            col++;
+            bname=xml.getAttribute('name');
+            var cr=parseInt(xml.getAttribute('count_result'),10);
+            curbible=bname;
+            if(cr && cr>s.count){ t.history[c.hist_pos].count=s.count=cr; }
+            var pg=parseInt(xml.getAttribute('page'),10);
+            t.history[c.hist_pos].page=s.page=(pg>0)?pg:0;
+            t.history[c.hist_pos].pages=s.pages=parseInt(xml.getAttribute('pages'),10);
+            cn=document.createElement('div');
+            cn.setAttribute('id',bname+'-'+c.next_div);
+            newnode.appendChild(cn);
+            if(cols>1){
+            sw=document.createElement('div');
+            sw2='padding: 0px;font: 6pt Verdana,sans-serif;';
+            t.addStyle(sw,sw2);
+            sw.innerHTML=xml.getAttribute('title');
+            cn.appendChild(sw);
+            }
+            //cn=$__(bname);
+            sw2=((cols>1)?((col>1)?'padding-left: 40%;':'')+'width: 37%;':'width: 77%;')+'margin-left:23%;position:absolute;'
+            t.addStyle(cn,sw2);
+            //cn.style.cssText=sw2;
+          }
+          if(n=='book'){
+            bname=xml.getAttribute('id');
+            curbook=xml.getAttribute('abbrev');
+            t.history[c.hist_pos].btitle=s.bookt=(s.find)?'':xml.getAttribute('title');
+            t.history[c.hist_pos].bname=s.bookn=(s.find)?'':curbook;
+            t.history[c.hist_pos].bid=s.booki=(s.find)?'':parseInt(bname,10);
+          }
+          if(n=='chapter'){
+            bname=xml.getAttribute('id');
+            curchapter=bname;
+            if((s.mode==='ptk'||s.mode==='loik')){
+              var rn=document.createElement('span');
+              rn.setAttribute('id',curbible+'-'+curbook+'-'+curchapter+'-'+c.next_div);
+              if(s.mode==='loik'){
+                rn.setAttribute('class','ptk2');
+                rn.innerHTML='<a href="#" onclick="$__(\'q\').value=net.piibel.state.q=\''+curbook+'+'+curchapter+'\';return net.piibel.load();">'+curbook+' '+curchapter+"</a>\n";
+              } else if(col<2) {
+                rn.setAttribute('class','ptk');
+                rn.setAttribute('style','margin-left:-'+((cols>1)?'37.5':'17')+'%;');
+                rn.innerHTML=bname;
+              }
+              cn.appendChild(rn);
             }
           }
         }
-        if(n=='bible'){
-          col++;
-          bname=xml.getAttribute('name');
-          var cr=parseInt(xml.getAttribute('count_result'),10);
-          curbible=bname;
-          if(cr && cr>s.count){ t.history[c.hist_pos].count=s.count=cr; }
-          var pg=parseInt(xml.getAttribute('page'),10);
-          t.history[c.hist_pos].page=s.page=(pg>0)?pg:0;
-          t.history[c.hist_pos].pages=s.pages=parseInt(xml.getAttribute('pages'),10);
-          cn=document.createElement('div');
-          cn.setAttribute('id',bname+'-'+c.next_div);
-          newnode.appendChild(cn);
-          if(cols>1){
-          sw=document.createElement('div');
-          sw2='padding: 0px;font: 6pt Verdana,sans-serif;';
-          t.addStyle(sw,sw2);
-          sw.innerHTML=xml.getAttribute('title');
-          cn.appendChild(sw);
-          }
-          //cn=$__(bname);
-          sw2=((cols>1)?((col>1)?'padding-left: 40%;':'')+'width: 37%;':'width: 77%;')+'margin-left:23%;position:absolute;'
-          t.addStyle(cn,sw2);
-          //cn.style.cssText=sw2;
-        }
-        if(n=='book'){
-          bname=xml.getAttribute('id');
-          curbook=xml.getAttribute('abbrev');
-          t.history[c.hist_pos].btitle=s.bookt=(s.find)?'':xml.getAttribute('title');
-          t.history[c.hist_pos].bname=s.bookn=(s.find)?'':curbook;
-          t.history[c.hist_pos].bid=s.booki=(s.find)?'':parseInt(bname,10);
-        }
-        if(n=='chapter'){
-          bname=xml.getAttribute('id');
-          curchapter=bname;
-          if((s.mode==='ptk'||s.mode==='loik')){
-            var rn=document.createElement('span');
-            rn.setAttribute('id',curbible+'-'+curbook+'-'+curchapter+'-'+c.next_div);
-            if(s.mode==='loik'){
-              rn.setAttribute('class','ptk2');
-              rn.innerHTML='<a href="#" onclick="$__(\'q\').value=piibel.state.q=\''+curbook+'+'+curchapter+'\';return piibel.load();">'+curbook+' '+curchapter+"</a>\n";
-            } else if(col<2) {
-              rn.setAttribute('class','ptk');
-              rn.setAttribute('style','margin-left:-'+((cols>1)?'37.5':'17')+'%;');
-              rn.innerHTML=bname;
+        else if(typ==3&&v&&v!='\n'){
+          a=p.nodeName;
+          sw2=v;
+          if(a=='row'){
+            curverse=p.getAttribute('verse');
+            var heading=p.getAttribute('heading');
+            if(heading && s.mode==='ptk') {
+              rn=document.createElement('div');
+              rn.setAttribute('class','b');
+              rn.innerHTML=heading;
+              heading='<div class="heading">'+heading+"</div>\n";
+              cn.appendChild(rn);
             }
-            cn.appendChild(rn);
-          }
-        }
-      }
-      else if(typ==3&&v&&v!='\n'){
-        a=p.nodeName;
-        sw2=v;
-        if(a=='row'){
-          curverse=p.getAttribute('verse');
-          var heading=p.getAttribute('heading');
-          if(heading && s.mode==='ptk') {
             rn=document.createElement('div');
-            rn.setAttribute('class','b');
-            rn.innerHTML=heading;
-            heading='<div class="heading">'+heading+"</div>\n";
+            rn.setAttribute('id',curbible+'-'+curbook+'-'+curchapter+'-'+curverse+'-'+c.next_div);
+            rn.setAttribute('class',a);
+            if(s.mode==='ptk' || s.mode==='loik'){
+              rn.innerHTML='<span class="v'+((s.goy&&s.goy.match(new RegExp('('+curbook+'-'+curchapter+'-'+curverse+')')))?' active':'')+'">'+curverse+'&nbsp;'+sw2+"</span>\n";
+            } else {
+              if(s.find){ sw2=sw2.replace(new RegExp('('+s.find.replace(/[\+\-\*\%]/g,"")+')','gi'),'<span class="found">$1</span>'); }
+               rn.innerHTML='<a class="s10" style="text-decoration:none;color:#333333;" href="?q='+curbook+'+'+curchapter+'&verse='+curverse+'" onclick="net.piibel.state.found=\''+s.find+'\';$__(\'q\').value=net.piibel.state.q=\''+curbook+'+'+curchapter+'\';net.piibel.state.goy=this.parentNode.id;return net.piibel.load();"><span style="color: #01436F; font-weight: bold">'+curbook+' '+curchapter+':'+curverse+'</span>&nbsp;'+sw2+"</a>\n";
+            }
             cn.appendChild(rn);
           }
-          rn=document.createElement('div');
-          rn.setAttribute('id',curbible+'-'+curbook+'-'+curchapter+'-'+curverse+'-'+c.next_div);
-          rn.setAttribute('class',a);
-          if(s.mode==='ptk' || s.mode==='loik'){
-            rn.innerHTML='<span class="v'+((s.goy&&s.goy.match(new RegExp('('+curbook+'-'+curchapter+'-'+curverse+')')))?' active':'')+'">'+curverse+'&nbsp;'+sw2+"</span>\n";
-          } else {
-            if(s.find){ sw2=sw2.replace(new RegExp('('+s.find.replace(/[\+\-\*\%]/g,"")+')','gi'),'<span class="found">$1</span>'); }
-             rn.innerHTML='<a class="s10" style="text-decoration:none;color:#333333;" href="?q='+curbook+'+'+curchapter+'&verse='+curverse+'" onclick="piibel.state.found=\''+s.find+'\';$__(\'q\').value=piibel.state.q=\''+curbook+'+'+curchapter+'\';piibel.state.goy=this.parentNode.id;return piibel.load();"><span style="color: #01436F; font-weight: bold">'+curbook+' '+curchapter+':'+curverse+'</span>&nbsp;'+sw2+"</a>\n";
-          }
-          cn.appendChild(rn);
+        //for(i in attr){if(a==attr[i]){a=p.parentNode.nodeName+'_'+a;break;}}
         }
-      //for(i in attr){if(a==attr[i]){a=p.parentNode.nodeName+'_'+a;break;}}
       }
+      if(xml.hasChildNodes){
+        for(var i=0,j=xml.childNodes.length;i<j;i++){ xmlload(xml.childNodes[i]); }
+        if(n=='result'){ 
+          c.slide_dir=net.piibel.slidesel(c.hist_pos,c.hist_pos-1);
+          return t.rebuild(newnode);
+        }
+      }
+      return 0;
+    };
+    return function(x){
+     log("loading xml");
+     t=(this.context)?this:window.net.piibel;
+     s=t.state;
+     c=t.context;
+     return xmlload(x);
+    };
+  })(),
+  hashstr: {
+    poll: function(){
+      var t=(this.context)?this:window.net.piibel;
+      var bc=t.context;
+      log("start polling");
+      bc.unpoll=0;
+      bc.back_lock=0;
+      var interval=500;
+      if(!bc.pollid) { bc.pollid=setInterval(t.hashstr.poll_hash,interval); }
+      return bc.pollid;
+    },
+    unpoll: function(){
+      var t=(this.context)?this:window.net.piibel;
+      var bc=t.context;
+      log("stop polling");
+      bc.unpoll=1;
+      if(bc.pollid) { clearInterval(bc.pollid); bc.pollid=0; }
+      return bc.pollid;
+    },
+    poll_hash: function(num,force){
+      var t=(this.context)?this:window.net.piibel;
+      var bc=t.context;
+      if(bc.upoll>0 || bc.locked>0) { return false; }
+      var str='';
+      var sw2=decodeURI(window.location.hash);
+      if(sw2) { str=sw2.replace(/^#/,''); }
+      //else if(window.location.search) str=window.location.search.replace(/^\?/,'');
+      if(force||(bc.active_uri&&bc.active_uri!=sw2)) {
+        if(!force&&bc.active_uri=='#'&&sw2==='') { return true; }
+        //console.log("poll:("+sw2+")("+bc.active_uri+")")
+        if(!force) bc.back_lock=1;
+        //$__('err').innerHTML+="loaded bq("+piibel.q+") lq("+str+")u("+piibel.active_uri+") h("+location.hash+")<br>\n";
+        if(!str) { 
+          str='#'; if(bc.active_uri&&bc.active_uri!=str) { $__('q').value='';  }
+        }
+        var l=function(){
+          t.update_request(str);
+          t.load(str);
+        }
+        if(!t.bibles){c_('net.piibel.bibles',l);}
+        else{l();}
+      }
+      return true;
     }
-    if(xml.hasChildNodes){
-      for(var i=0,j=xml.childNodes.length;i<j;i++){ xmlload(xml.childNodes[i]); }
-      if(n=='result'){ 
-        c.slide_dir=piibel.slidesel(c.hist_pos,c.hist_pos-1);
-        return t.rebuild(newnode);
-      }
-    }
-    return 0;
-  };
-  return function(x){
-   log("loading xml");
-   t=(this.context)?this:window.piibel;
-   s=t.state;
-   return xmlload(x);
-  };
-
-})();
-
-//var objHash=null;
-piibel.hashstr={
-  poll: function(){
-    var t=(this.context)?this:window.piibel;
-    var bc=t.context;
-    log("start polling");
-    bc.unpoll=0;
-    bc.back_lock=0;
-    var interval=500;
-    if(!bc.pollid) { bc.pollid=setInterval(t.hashstr.poll_hash,interval); }
-    return bc.pollid;
-  },
-  unpoll: function(){
-    var t=(this.context)?this:window.piibel;
-    var bc=t.context;
-    log("stop polling");
-    bc.unpoll=1;
-    if(bc.pollid) { clearInterval(bc.pollid); bc.pollid=0; }
-    return bc.pollid;
-  },
-  poll_hash: function(num,force){
-    var t=(this.context)?this:window.piibel;
-    var bc=t.context;
-    if(bc.upoll>0 || bc.locked>0) { return false; }
-    var str='';
-    var sw2=decodeURI(window.location.hash);
-    if(sw2) { str=sw2.replace(/^#/,''); }
-    //else if(window.location.search) str=window.location.search.replace(/^\?/,'');
-    if(force||(bc.active_uri&&bc.active_uri!=sw2)) {
-      if(!force&&bc.active_uri=='#'&&sw2==='') { return true; }
-      //console.log("poll:("+sw2+")("+bc.active_uri+")")
-      if(!force) bc.back_lock=1;
-      //$__('err').innerHTML+="loaded bq("+piibel.q+") lq("+str+")u("+piibel.active_uri+") h("+location.hash+")<br>\n";
-      if(!str) { 
-        str='#'; if(bc.active_uri&&bc.active_uri!=str) { $__('q').value='';  }
-      }
-      var l=function(){
-        t.update_request(str);
-        t.load(str);
-      }
-      if(!t.bibles){c_('piibel.bibles',l);}
-      else{l();}
-    }
-    return true;
   }
 };
 
@@ -608,17 +574,17 @@ function setSelect(a,t){
 }
 
 
-var getlistener=function(l){ return (l.addEventListener)?l.addEventListener:(l.attachEvent)?(l.attachEvent):null; };
 
 var controls = {
+  getlistener: function(l){ return (l.addEventListener)?l.addEventListener:(l.attachEvent)?(l.attachEvent):null; },
   bookform: {
     rowscontrol: (function(){
       var n="rows";
       var ref=null;
       var t=null;
-      var init=function(){if(!ref){ ref=$__(n); }t = piibel.state;}
+      var init=function(){if(!ref){ ref=$__(n); }t = net.piibel.state;}
       var onkeypress=function(e){var ev=(!e)?window.event:e;return __onenter(ev);}
-      var onchange=function(){t[n]=ref.options[ref.selectedIndex].value;piibel.load();}
+      var onchange=function(){t[n]=ref.options[ref.selectedIndex].value;net.piibel.load();}
       var listeners=function(){
         if(!ref){ init() }
         //var r=getlistener(ref);
@@ -640,7 +606,7 @@ var controls = {
       var ref=null;
       var t=null;
       var saved_len=0;
-      var init=function(){if(!ref){ ref=$__(n); }t = piibel.books;}
+      var init=function(){if(!ref){ ref=$__(n); }t = net.piibel.books;}
       var ao=function (vo){
         var abbr=vo.abbr;
         var e = document.createElement("option");
@@ -668,7 +634,7 @@ var controls = {
         log("booksel:"+o.length+" "+saved_len);
       };
       var onkeypress=function(e){ var ev=(!e)?window.event:e;return __onenter(ev); }
-      var onchange=function(){$__('q').value=$__('bookinput').value=piibel.state.q=ref.options[ref.selectedIndex].value;piibel.load();};
+      var onchange=function(){$__('q').value=$__('bookinput').value=net.piibel.state.q=ref.options[ref.selectedIndex].value;net.piibel.load();};
       var listeners=function(){
         if(!ref){ init() }
         ref.onkeypress=function(e){return onkeypress(e);}
@@ -686,9 +652,9 @@ var controls = {
       var n="bookinput";
       var ref=null;
       var t=null;
-      var init=function(){if(!ref){ ref=$__(n); }t = piibel.state;}
+      var init=function(){if(!ref){ ref=$__(n); }t = net.piibel.state;}
       var onkeypress=function(e){ var ev=(!e)?window.event:e;return __onenter(ev);};
-      var onkeyup=function(e){var ev=(!e)?window.event:e;var n=(ev.target)?ev.target:(ev.srcElement)?ev.srcElement:null;piibel.state.q=n.value;controls.bookform.bookselect("listen");};
+      var onkeyup=function(e){var ev=(!e)?window.event:e;var n=(ev.target)?ev.target:(ev.srcElement)?ev.srcElement:null;net.piibel.state.q=n.value;controls.bookform.bookselect("listen");};
       var listeners=function(){
         if(!ref){ init() }
         ref.onkeypress=function(e){return onkeypress(e);}
@@ -708,8 +674,8 @@ var controls = {
       var n="bookbutton";
       var ref=null;
       var t=null;
-      var onclick=function(){return piibel.load();};
-      var init=function(){if(!ref){ ref=$__(n); }t=piibel.state;}
+      var onclick=function(){return net.piibel.load();};
+      var init=function(){if(!ref){ ref=$__(n); }t=net.piibel.state;}
       var listeners=function(){
         if(!ref){ init() }
         ref.onclick=onclick;
@@ -764,7 +730,7 @@ var controls = {
       var n="q";
       var ref=null;
       var t=null;
-      var init=function(){if(!ref){ ref=$__(n); }t = piibel.state;}
+      var init=function(){if(!ref){ ref=$__(n); }t = net.piibel.state;}
       var onfocus=function(){ select(); };
       var onkeypress=function(e){ var ev=(!e)?window.event:e;t[n]=ref.value;return __onenter(ev);};
       var onkeyup=function(){t.q=ref.value;};
@@ -789,8 +755,8 @@ var controls = {
       var n="sens";
       var ref=null;
       var t=null;
-      var init=function(){if(!ref){ ref=$__(n); }t=window.piibel.state;}
-      var onclick=function(){t[n]=(ref.checked==true)?1:0;if(t.q){piibel.load();}};
+      var init=function(){if(!ref){ ref=$__(n); }t=window.net.piibel.state;}
+      var onclick=function(){t[n]=(ref.checked==true)?1:0;if(t.q){net.piibel.load();}};
       var listeners=function(){
         if(!ref){ init() }
         ref.onclick=function(){return onclick();}
@@ -813,7 +779,7 @@ var controls = {
       var cur=-1;
       var bkeys=[];
       var init=function(){
-        if(!ref){ ref=$__(n); }t=window.piibel;s=t.state;b=t.bibles;
+        if(!ref){ ref=$__(n); }t=window.net.piibel;s=t.state;b=t.bibles;
         for(var x='',i=0,l=b.length;i<l;i++){ if(!b[i]){continue;}x=b[i].id;bkeys[i]=x;}
       }
       var update_bv=function(){
@@ -858,7 +824,7 @@ var controls = {
           }
         }
       };
-      var onclick=function(e){piibel.state.unpoll=1;reg_bv(e);piibel.load();$__('q').select();};
+      var onclick=function(e){net.piibel.state.unpoll=1;reg_bv(e);net.piibel.load();$__('q').select();};
       var listeners=function(){
         if(!ref||!b){ init() }
         for(var x='',i=0,l=bkeys.length;i<l;i++){ if(!bkeys[i]){continue;}x=bkeys[i];x='input_'+x;$__(x).onclick=onclick; }
@@ -890,7 +856,7 @@ var controls = {
       };
       return function(todo,v){
         init();
-        if(!b.length) {log("biblescontrol error:piibel.bibles empty...");return true;}
+        if(!b.length) {log("biblescontrol error:net.piibel.bibles empty...");return true;}
         if(todo=='show'){return show();}
         if(todo=='update'){return update_bv();}
         if(todo=='reg'){return reg_bv(v);}
@@ -900,8 +866,8 @@ var controls = {
       var n="querybutton";
       var ref=null;
       var t=null;
-      var onclick=function(){piibel.state.q=$__('q').value;piibel.state.page=0;return piibel.load();};
-      var init=function(){if(!ref){ ref=$__(n); }t=piibel.state;}
+      var onclick=function(){net.piibel.state.q=$__('q').value;net.piibel.state.page=0;return net.piibel.load();};
+      var init=function(){if(!ref){ ref=$__(n); }t=net.piibel.state;}
       var listeners=function(){
         if(!ref){ init() }
         ref.onclick=onclick;
@@ -919,17 +885,17 @@ var controls = {
   show_pages: 20,
   show_aver: 0,
   bookn:'',
-  mkv:function(v,n,vr,vl) { vr=((!vr)?'piibel.state.q':vr);vl=((!vl)?'':vl);return vr+"='"+vl+v+"';"+((n)?"$__('q').value=\'\';":''); },
-  apr:function(i,h,e,c,v) { return '<a '+((i)?' id="'+i+'"':'')+'href="'+h+'" onclick="piibel.context.unpoll=1;'+e+'return piibel.load();"'+((c)?' class="'+c+'"':'')+'>'+v+"</a>"; },
-  chq: function() { return (piibel.state.mode==='ptk'&&(!piibel.state.rows||piibel.state.rows==0)) ? 1 : 0; },
+  mkv:function(v,n,vr,vl) { vr=((!vr)?'net.piibel.state.q':vr);vl=((!vl)?'':vl);return vr+"='"+vl+v+"';"+((n)?"$__('q').value=\'\';":''); },
+  apr:function(i,h,e,c,v) { return '<a '+((i)?' id="'+i+'"':'')+'href="'+h+'" onclick="net.piibel.context.unpoll=1;'+e+'return net.piibel.load();"'+((c)?' class="'+c+'"':'')+'>'+v+"</a>"; },
+  chq: function() { return (net.piibel.state.mode==='ptk'&&(!net.piibel.state.rows||net.piibel.state.rows==0)) ? 1 : 0; },
   bookflow: function(l) {
     if(l===null){ l=1; }
     var chq=this.chq();
-    var st=piibel.state;
-    var bks=piibel.books;
+    var st=net.piibel.state;
+    var bks=net.piibel.books;
     if(chq==1){
       var prev=0,next=2,lastbk=76;
-      var vr='piibel.state.q';
+      var vr='net.piibel.state.q';
       if(bks[0]){
         lastbk=bks.length;
         if(!st.booki) return null;
@@ -954,7 +920,7 @@ var controls = {
   },
   pageflow: function(l) {
     if(l===null){ l=1; }
-    var st=piibel.state;
+    var st=net.piibel.state;
     var pages=parseInt(st.pages,10);
     var page=parseInt(st.page,10);
         log("pageflow page:"+page+" "+pages);
@@ -964,21 +930,21 @@ var controls = {
     var swap2= ( show_pages - 1 );
     var prev_pages = ( page > show_aver && pages >= show_pages ) ? ( ( page > (pages - show_aver ) ) ? (pages - swap2) : (page - show_aver) ) : 1 ;
     var next_pages = ( page <= (pages - show_aver) && pages >= show_pages ) ? ( ( page > show_aver ) ? (page + swap1) : show_pages )  : pages;
-    var vr='piibel.state.page';
+    var vr='net.piibel.state.page';
     var vl='';
     var str='';
     var chq=this.chq();
     var i=0;
     if(chq==1){
-      vr='piibel.state.q';
-      if(piibel.books[0]){ vl=st.bookn+' '; }
+      vr='net.piibel.state.q';
+      if(net.piibel.books[0]){ vl=st.bookn+' '; }
     }
     str=(page>1)?this.apr(null,'#',this.mkv(1,chq,vr,vl),'b s10','&laquo;'):'<span class="c10">&laquo</span>';
     str+=(page>1)?this.apr(null,'#',this.mkv(page-1,chq,vr,vl),'c10','eelmine'):'<span class="c10">eelmine</span>';
     for(i=prev_pages;i<=next_pages;i++){ var a=this.mkv(i,chq,vr,vl); str+=this.apr(null,a,a,((page==i||(page===0&&i==1))?'active b s10':''),(i<10)?'&nbsp;'+i:i)+((i<show_pages)?',':''); }
     str+=(page<pages&&pages>1)?this.apr(null,'#',this.mkv((page)?page+1:page+2,chq,vr,vl),'c10','j&auml;rgmine'):'<span class="c10">j&auml;rgmine</span>';
     str+=(page<pages&&pages>1)?this.apr(null,'#',this.mkv(pages,chq,vr,vl),'b s10','&raquo;'):'<span class="c10">&raquo;</span>';
-    str='<span style="padding-right:8em;">'+str+'<span id="numflowend" class="c10" text-align:left;"></span></span>';
+    str='<span style="margin-right:10%;">'+str+'<span id="numflowend" class="c10" text-align:left;"></span></span>';
     $__('numflow'+l).innerHTML=str;
   },
   bookformlink: (function(){
@@ -989,7 +955,7 @@ var controls = {
    var onclick=function(){controls.bookform.bookdiv();return false;};
    var onmouseover=function(){controls.bookform.bookdiv('show');return false;};
    var onmouseout=function(){controls.bookform.bookdiv('hide');return false;};
-   var init=function(){if(!ref){ ref=$__(n); }t = piibel.state;}
+   var init=function(){if(!ref){ ref=$__(n); }t = net.piibel.state;}
    var listeners=function(){
      if(reg) { return; }
      if(!ref){ init() }
