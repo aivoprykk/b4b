@@ -25,16 +25,26 @@
   else if (supportsFilters) {
     setOpacity = function(el, value){
       var es = el.style;
-      var v=value*100,str='';
-      if (el.currentStyle && !el.currentStyle.hasLayout) es.zoom = 1;
-      if (reOpacity.test(es.filter)) {
-        str = value >= 0.9999 ? '' : ('alpha(opacity=' + v + ');');
-        es.filter = es.filter.replace(reOpacity, str);
-        str = value >= 0.9999 ? '' : ('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + v + ');');
-        es.filter = es.filter.replace(reOpacity8, str);
+      var v=value*100,str='',str8='';
+      if(v>1&&v<99){
+      	  if (el.currentStyle && !el.currentStyle.hasLayout) {es.zoom = 1;}
+      	  str='alpha(opacity=' + v + ');';
+      	  if(!bowser||(bowser.msie&&bowser.version>7)){
+      	  	  str8='progid:DXImageTransform.Microsoft.Alpha(Opacity=' + v + ');';
+      	  }
       }
-      else {
-        es.filter += 'progid:DXImageTransform.Microsoft.Alpha(Opacity='+v+');'+'alpha(opacity='+v+')';
+      if(str||str8){
+      	  if (reOpacity.test(es.filter)) {
+      	  	  es.filter = es.filter.replace(reOpacity, str);
+      	  	  es.filter = es.filter.replace(reOpacity8, str8);
+      	  }
+      	  else {
+      	  	  es.filter += str;
+      	  	  if(str8) {es.filter += str8;}
+      	  }
+      }else{
+      	  es.filter = '';
+      	  es.zoom='';
       }
       es.visibility=(value>0)?'inherit':'hidden';
     };
@@ -48,10 +58,13 @@
   function s(str, p, c){ return str.substr(p,c||1); }
   function color(source,target,pos){
     var i = 2, j, c, tmp, v = [], r = [];
-    while(j=3,c=arguments[i-1],i--)
-      if(s(c,0)=='r') { c = c.match(/\d+/g); while(j--) v.push(~~c[j]); } else {
-        if(c.length==4) c='#'+s(c,1)+s(c,1)+s(c,2)+s(c,2)+s(c,3)+s(c,3);
-        while(j--) v.push(parseInt(s(c,1+j*2,2), 16)); }
+    while(j=3,c=arguments[i-1],i--){
+    	if(s(c,0)=='r') { c = c.match(/\d+/g); while(j--) { v.push(~~c[j]); } } 
+    	else {
+    		if(c.length==4) { c='#'+s(c,1)+s(c,1)+s(c,2)+s(c,2)+s(c,3)+s(c,3); }
+    		while(j--) { v.push(parseInt(s(c,1+j*2,2), 16));}
+    	}
+    }
     while(j--) { tmp = ~~(v[j+3]+(v[j]-v[j+3])*pos); r.push(tmp<0?0:tmp>255?255:tmp); }
     return 'rgb('+r.join(',')+')';
   }

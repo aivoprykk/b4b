@@ -18,7 +18,7 @@
   display:inline;
 }
 #menu ul {
-  margin:1px;1px;
+  margin:1px 1px;
   padding:1px;
   display: inline;
 }
@@ -102,7 +102,7 @@ form { margin: 0px;padding: 0px;}
 #footer {
 	clear: both;
 	margin-top: 1px;
-	padding: 10px 35px;
+	padding: 3px 10px;
 	border-width: 0px;
 	border:1px solid #B1E8FA;	
 	border-top: 1px solid #008AE3;
