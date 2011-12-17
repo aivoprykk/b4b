@@ -602,6 +602,7 @@ var controls = {
       var onchange=function(){t[n]=ref.options[ref.selectedIndex].value;net.piibel.load();};
       var listeners=function(){
         if(!ref){ init(); }
+        if(!ref){ return !0; }
         //var r=getlistener(ref);
         //if(r){ r('onkeypress', onkeypress, false); r('onchange', onchange, false); }
         ref.onkeypress=function(e){return onkeypress(e);};
@@ -610,6 +611,7 @@ var controls = {
       listeners();
       return function(todo){
         init();
+        if(!ret){return !0;}
         log("controls.bookform.rowcontrol.todo:"+todo+' '+t[n]);
         if(todo=='onkeypress'){ return onkeypress(); }
         if(todo=='onchange'){ return onchange(); }
@@ -633,11 +635,12 @@ var controls = {
       };
       var listeners=function(){
         if(!ref){ init(); }
-        ref.onkeyup=onkeyup;
+        if(ref){ ref.onkeyup=onkeyup; }
       };
       listeners();
       return function(todo){
         init();
+        if(!ref) { return !0; }
         log("controls.rowsinput.todo:"+todo+' '+ref.id);
         if(todo=='onkeyup'){ return onkeyup(); }
         return t;
