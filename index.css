@@ -61,7 +61,7 @@ body {margin: 0%;color: #333;}
   width: 100%;
   height: 129px;
   padding: 0%;
-  background: #FFF url(../img/header.gif) top left no-repeat;
+  background: #FFF url(img/header.gif) top left no-repeat;
   border-bottom: 1px solid #999999; 
 }
 #upmenublock {
@@ -106,7 +106,7 @@ form { margin: 0px;padding: 0px;}
 	border-width: 0px;
 	border:1px solid #B1E8FA;	
 	border-top: 1px solid #008AE3;
-	background: #ABE6F9 url(../img/footer-bg.gif) repeat-x;
+	background: #ABE6F9 url(img/footer-bg.gif) repeat-x;
 	color: #004A7A;
 }
 #footer a {	color:#004A7A;text-decoration: none;}
@@ -115,7 +115,7 @@ form { margin: 0px;padding: 0px;}
 /*common txt*/
 h1, h2, .pealkiri, .th {font: bold 10pt Georgia, "MS Sans Serif", Geneva, sans-serif; }
 h1, h2{ padding: 7px 3px 3px 3px;}
-h1 {margin: 0px;font-size: 9pt;	border-bottom: 1px solid #C5C5C5;color: #777777;background: #efefef url(../img/h1-bg.gif) repeat-x;}
+h1 {margin: 0px;font-size: 9pt;	border-bottom: 1px solid #C5C5C5;color: #777777;background: #efefef url(img/h1-bg.gif) repeat-x;}
 h2 {font-size: 8pt;	border-bottom: 1px solid #C5C5C5;margin:0px;}
 /*.th { font-size: 9.5pt; color:#00cccc; background: #fff !important}*/
 .b {font-weight: bold;}
