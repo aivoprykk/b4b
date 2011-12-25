@@ -88,7 +88,9 @@ net.piibel={
     default_bv: 'EST_97',
     page_slide_time: 500,
     page_slide_len: 700,
-    page_slide_enabled:1
+    page_slide_enabled:1,
+    menutarget:0,
+    menutimer:0
   },
   preload: function(){
     var t=(this.context)?this:window.net.piibel;
@@ -588,7 +590,19 @@ function setSelect(a,t){
  return false;
 }
 
-
+var menu=function(){
+    var cname='',
+    timeout=500,
+    timer=0,
+    target=null;
+    this.open=function(id){this.cancelclose();if(target){target.style.display='none';}if((target=$__(id))){target.style.display='block';}return this;};
+    this.close=function(){if(target){target.style.display='none';target=null;}return this;};
+    this.closedelay=function(o){if(!o){o=timeout;}timer=setTimeout(close,o);return this;};
+    this.cancelclose=function(){if(timer){clearTimeout(timer);timer=0;}return this;};
+    this.t=function(){return target;};
+    log("menu is:"+this);
+    return this;
+}();
 
 var controls = {
   getlistener: function(l){ return (l.addEventListener)?l.addEventListener:(l.attachEvent)?(l.attachEvent):null; },
