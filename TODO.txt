@@ -1,0 +1,25 @@
+TODO
+
+/b2 API
+1) salmide näitamine 1997 versioonis(nagu b1 ongi)
+2) cs ja lang võtmed päringus
+3) saksa raamatulühendite toetus 1.xxx Search moodulis
+4) rows kasutamise täpsustamine päringus, praegune tugi on nõrk. ptk/salm/otsing täpsem eristamine.
+5) hostkey support, hostipäringute kontroll päringus
+6) xml doctype definition
+
+
+/b4 CLI
+1) otsingutekstikasti raamatulühendite pakkumine
+2) raamistuse lisamine all ja üleval, kerimine vastavalt raamide vahel
+3) akna laiusega suhtes laiusmõõdud
+4) salmide jaoks kastid - võrdsed kõrgused paralleeltekstidele
+5) otsingu kirjakoht popup vaates?
+6) raamatu sisukord pealkirja popupis? bibleserver.com
+7) keeletugi kliendis - en de et
+8) piiblinimed/copyright nagu bibleserver.com
+
+kogu sait
+1) juhendmaterjal...
+2) juhendmaterjal kasutajale
+3) juhendmaterjal arendajale
