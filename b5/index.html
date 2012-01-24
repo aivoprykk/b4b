@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Piibel.NET B4</title>
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="index.css" media="all" />
+</head>
+<body>
+<div id="container">
+<div id="content">
+<div>
+<div id="left" style="left:-36px;background:#fff url(img/prev.png) center right no-repeat;"></div>
+<div id="right" style="right:-36px;background:#fff url(img/next.png) center left no-repeat;"></div>
+</div>
+<div id="hh1" style=""></div>
+<div id="h1">
+<form id="form1" method="get" action="/">
+<div id="otsing-form">
+<span id="query_input" style="width:56%"><label class="b"><input name="q" type="text" id="q"  value="" class="input" tabindex="1"/></label></span>
+<span id="query_button" style="width:6%"><input type="button" id="querybutton" value="Otsi" class="input" tabindex="2"/></span>
+<span id="sens_select" style="width:4%"><label class="b"><input name="sens" id="sens" type="checkbox" value="0" title="T&otilde;situndlik otsing" tabindex="3"/></label></span>
+<span id="bible_select" style="width:16%">
+<label class="b"><input id="input_EST_97" type="checkbox" name="EST_97" value="0" title="Eestikeelne piibel 1997" tabindex="4" />97</label>
+<label class="b"><input id="input_EST_68" type="checkbox" name="EST_68" value="0" title="Eestikeelne piibel 1968" tabindex="5" />68</label>
+</span>
+</div>
+</form>
+<div style="margin-top:1em;">
+<span id="hh1_sub" style="visibility:hidden">
+<span id="booktitle" class="pealkiri"><!--Esimene Moosese raamat--></span>
+</span>
+</div>
+</div>
+<div id="waiting" style="height:60px;padding:10px;text-align:center;display:none;position:fixed;"><img height="30" alt="waiting" src="/img/waiting1.gif" /></div>
+
+<div id="loe">
+<div id="scrolldiv">
+<div id="bibles">
+<!--div id="bible1" style="width: 20em;position:absolute;">
+<div class="row"><span class="v"><a name="1"></a>1&nbsp;</span>Alguses lõi Jumal taeva ja maa.</div>
+<div class="row"><span class="v"><a name="2"></a>2&nbsp;</span>Maa oli tühi ja paljas ja pimedus oli sügavuse peal ja Jumala Vaim hõljus vete kohal.</div>
+<div class="row"><span class="v"><a name="3"></a>3&nbsp;</span>Ja Jumal ütles: &quot;Saagu valgus!&quot; Ja valgus sai.</div>
+</div-->
+</div>
+</div>
+</div>
+<div style="background-color:#C5C5C5;text-align:right;height:0px;">
+<div id="bookdiv" style="visibility:hidden;">
+<form id="form2" method="get" action="/">
+<div>
+<select name="rows" id="rows" tabindex="6"><option value="0">Ridu</option><option value="20">20</option><option value="40">40</option><option value="60">60</option><option value="80">80</option><option value="100">100</option></select>
+<input name="bookinput" type="text" id="bookinput" tabindex="7" size="4" maxlength="4" />
+<select name="bookselect" id="bookselect" tabindex="8"><option value="0"></option></select>
+<input name="vaata" type="button" id="bookbutton" value="Vaata" tabindex="9" class="input" />
+</div>
+</form>
+</div>
+</div>
+<div id="foot_toolbar" class="toolbar" style="clear:both;">
+<span id="bookshow" class="peatykid" style="float:right;">
+<span id="bookflow1">
+<span class="c10">&laquo;eelmine</span>,
+<span class="c10">j&auml;rgmine&raquo;</span>&nbsp;
+</span>
+<span id="bookformshow">
+<a href="#" id="bookformlink">raamat</a>&nbsp;
+</span>
+</span>
+<span class="peatykid" style="float:left;margin-left:3.5%">
+<span id="numflow2" class="peatykid" style="clear:both; text-align:right;">
+</span>
+</span>
+<!--span id="numflow1" class="peatykid" style="clear:both; text-align:right;">
+<span style="padding-right:10%">
+<span class="d10">«</span>
+<span class="d10">eelmine</span>
+<a class="active b s10" href="#">&nbsp;1</a>
+<span class="d10">järgmine</span>
+<span class="d10">»</span>
+<span id="numflowend" class="d10">peatükk</span>
+</span>
+</span-->
+</div>
+<div id="upmenublock">
+<ul id="menu">
+<li class="item"><a href="">ESILEHT</a></li>
+<li class="item"><a href="sisukord.html">PIIBLI SISUKORD</a></li>
+<li class="item"><a href="?q=random+ptk">JUHUSLIK PEAT&Uuml;KK</a></li>
+<li class="item"><a href="?q=random">JUHUSLIK SALM</a></li>
+<li class="item"><a href="http://www.eps.ee/" onclick="return openNew(this.href);">EESTI PIIBLISELTS</a></li>
+<li class="item"><a href="/lisainfo.html">LISAINFO </a></li>
+</ul>
+</div>
+<!-- dynamic content end -->
+<div id="footer" style="visibility:hidden">
+<div id="copy">&copy; AD 2005-2011 Eesti Piibliselts</div>
+<a href="http://www.eps.ee">www.eps.ee</a><br />
+<a href="http://www.kompass.ee">www.kompass.ee</a>
+<div id="err"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="inc/script.min.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+var debug=0;
+if(window.location.pathname.match(/debug/)) debug=1;
+var log = function(str){ if(window.debug>0&&console&&console.log){ console.log(str);}};
+if(debug) $script(['index.js','inc/bowser.js','inc/emile.js'], function(){var p=window.net.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+else $script(['index.min.js','inc/bowser.min.js','inc/emile.min.js'], function(){var p=window.net.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+
+var __onenter = function(evt) {
+    evt = (evt) ? evt : event;
+    var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+    if (charCode == 13) { net.piibel.state.page=0;net.piibel.load(); return false; }
+    return true;
+};
+var $___= function(e){
+    var m=e.split(/\./);
+    var l=m.length;
+    if(l>1){
+        log("e:"+e+",l:"+l+",m:"+m);
+        if(l>3&& m[3]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]]&&window[m[0]][m[1]][m[2]][m[3]])?window[m[0]][m[1]][m[2]][m[3]]:null; }
+        else if(l>2&& m[2]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]])?window[m[0]][m[1]][m[2]]:null; }
+        else if(l>1 && m[1]){ return (window[m[0]]&&window[m[0]][m[1]])?window[m[0]][m[1]]:null; }
+        else {                return (m[0]&&window[m[0]])?window[m[0]]:null;}
+    }
+    else{ return (typeof(e)==='string')?document.getElementById(e):e; } 
+};
+var c_ = (function(){
+  return function(i,j){
+    var el=i||null;
+    var callback=(typeof(j)==='function')?j:function(){};
+    var interval=0;
+    var a = {
+      init: function() {
+        if($___(el)) {
+          clearInterval(interval);
+          log('We have '+el+'!');
+          callback();
+        }
+      }
+    };
+    log("setinterval: ("+el+"),("+callback+")");
+    interval = setInterval(a.init, 100);
+  };
+})();
+//]]>
+</script>
+</body>
+</html>
