@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Piibel.NET B4</title>
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="index.css" media="all" />
+</head>
+<body> 
+<div id="headbar">
+<div id="headbar-sub">
+<div id="otsing-form">
+<form id="form1" style="border:0px;" method="get" action="/">
+<div style="left:0;top:0;margin:0;padding:0;background:#fff;display:block;">
+<ul class="bul">
+<li class="bxi bli">
+<span id="otsinguvorm" style="display:inline-block;">
+<input class="ibl input" style="border:0 none;" name="q" type="text" id="q"  placeholder="Otsi" value="Otsi" tabindex="1"/>
+</span>
+</li>
+<li class="bxi bli" style="line-height:15px;vertical-align:middle;">
+<span class="ba setbut2" tabindex="2" id="menulink-01" onkeypress="__onenter(event);" onclick="var a=$__('bar-menu-01'),b=this;if(a.style.display=='none'){a.style.display='block';}else{a.style.display='none';} return false;"></span>
+<div id="bar-menu-01" class="bdiv brsi" style="display:none;line-height:26px;top:18px;z-index:1000;">
+<ul class="bul nw">
+<li class="bli" style="line-height:20px;"><span class="bxi" style="font-size:7pt;font-weight:bold;text-align:center;padding:0px;width:95%;"><span style="padding:0px;">Otsingu tüüp</span></span></li>
+<li class="bli" style="line-height:1px;"><span class="bxi" style="padding:0;width:100%;border-top:1px solid #efefef;"><span style="padding:0;"></span></span></li>
+<li class="bli"><span id="link_sens_1" class="bxi" style="cursor:pointer;padding:5px;width:95%;"><span id="sens_1" class="bvbut bvbut1"></span><span style="padding:5px;">Regulaaravaldised</span></span></li>
+<li class="bli"><span id="link_sens_2" class="bxi" style="cursor:pointer;padding:5px;width:95%;"><span id="sens_2" class="bvbut bvbut1"></span><span style="padding:5px;">Fulltext</span></span></li>
+<li class="bli"><span id="link_sens_3" class="bxi" style="cursor:pointer;padding:5px;width:95%;"><span id="sens_3" class="bvbut bvbut1"></span><span style="padding:5px;">Binary Fulltext</span></span></li>
+</ul>
+</div>
+</li>
+<li class="bxi bli">
+<span id="query_button" style="display:inline-block;">
+<input class="ibl input" type="button" id="querybutton" value="Otsi" tabindex="3"/>
+</span>
+</li>
+<li class="bxi bli" style="line-height:15px;vertical-align:middle;">
+<span class="ba setbut1" tabindex="4"  id="menulink-02"  onkeypress="__onenter(event);" onclick="var a=$__('bar-menu-02'),b=this;if(a.style.display=='none'){a.style.display='block';}else{a.style.display='none';} return false;"></span>
+<div id="bar-menu-02" class="bdiv brsi" style="display:none;line-height:26px;top:18px;right:-1px;z-index:1000;">
+<ul class="bul nw">
+<li class="bli" style="line-height:20px;"><span class="bxi" style="font-size:7pt;font-weight:bold;text-align:center;padding:0px;width:95%;"><span style="padding:0px;">Piiblitõlked</span></span></li>
+<li class="bli" style="line-height:1px;"><span class="bxi" style="padding:0;width:100%;border-top:1px solid #efefef;"><span style="padding:0;"></span></span></li>
+<li class="bli">
+<span id="link_EST_68" class="bxi" style="cursor:pointer;padding:5px;width:95%;"><span id="nupp_EST_68" class="bvbut bvbut1"></span><span style="padding:5px;">1968. aasta tõlge</span></span>
+</li>
+<li class="bli">
+<span id="link_EST_97" class="bxi" style="cursor:pointer;padding:5px;width:95%;"><span id="nupp_EST_97" class="bvbut bvbut1"></span><span style="padding:5px;">1997. aasta tõlge</span></span>
+</li>
+<li class="bli" style="line-height:1px;"><span class="bxi" style="padding:5px;width:100%;border-top:1px solid #efefef;"><span style="padding:0;"></span></span></li>
+<li class="bli"><span style="padding:5px;">Kuvatakse ridu</span><span><input class="ibl input" type="text" id="ridasid" tabindex="" onkeyup="var a=net.piibel.state,t=this,i=function(v){return (v===+v&&v===(v|0));};if(t.value&&i(t.value)&&t.value<1000&&t.value!=t.getAttribute('placeholder')&&t.value!=a.rows){a.rows=t.value;};" style="width:25px;padding:2px;margin:0;border:1px solid #efefef;"/></span></li>
+<li class="bli"><span id="link_effect" class="bxi" style="cursor:pointer;padding:5px;width:95%;" onclick="var a=$__(this.id.replace('link_',''));if(a.className.match(/bvbut1/)){a.className='bvbut bvbut2';net.piibel.state.page_slide_enabled=1;}else{a.className='bvbut bvbut1';net.piibel.state.page_slide_enabled=0;}return false;"><span id="effect" class="bvbut bvbut1"></span><span style="padding:5px;">Visuaalefektid</span></span></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<!--<div>
+<span id="sens_select"><label class="b"><input name="sens" id="sens" type="checkbox" value="0" title="T&otilde;situndlik otsing" tabindex="3"/></label></span>
+<span id="bible_select">
+<label class="b"><input id="input_EST_97" type="checkbox" name="EST_97" value="0" title="Eestikeelne piibel 1997" tabindex="4" />97</label>
+<label class="b"><input id="input_EST_68" type="checkbox" name="EST_68" value="0" title="Eestikeelne piibel 1968" tabindex="5" />68</label>
+</span>
+</div>-->
+</form>
+</div>
+</div>
+<div style="position:absolute;right:10px;top:0;padding:0;margin:0;white-space:nowrap;line-height:28px;">
+<ul class="bul">
+<li class="bxi bli">
+<a href="#" class="ba bxa bsp" id="menulink-help" onclick="var a=$__('bar-menu-help'),b=this;if(a.style.display=='none'){a.style.display='block';b.className='ba bxb';}else{a.style.display='none';b.className='ba bxa';} return false;"><span id="seaded" >Abi</span></a>
+<div id="bar-menu-help" class="bdiv brsh" style="display:none;">
+<ul class="bul nw">
+<li class="bli"><a href="/sisukord.html" class="ba"><span style="padding:5px;">Piibli Sisukord</span></a></li>
+<li class="bli"><a href="/lisainfo.html" class="ba"><span style="padding:5px;">Lisainfo</span></a></li>
+<li class="bli"><a href="#" class="ba"><span style="padding:5px;">Raamatu otsing</span></a></li>
+<li class="bli">
+<a href="/" class="ba"><span style="padding:5px;">Piibel.net eelmine versioon</span></a>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="container"> 
+<div id="header" style="max-width:100%; min-width:100%;background:#fff url(img/header_b2.jpg) top left no-repeat;">
+<!--div id="upmenublock">
+<ul id="menu">
+<li class="item"><a href="">ESILEHT</a></li>
+<li class="item"><a href="/sisukord.html">PIIBLI SISUKORD</a></li>
+<li class="item"><a href="?q=random+ptk">JUHUSLIK PEAT&Uuml;KK</a></li>
+<li class="item"><a href="?q=random">JUHUSLIK SALM</a></li>
+<li class="item"><a href="http://www.eps.ee/" onclick="return openNew(this.href);">EESTI PIIBLISELTS</a></li>
+<li class="item"><a href="/lisainfo.html">LISAINFO </a></li>
+</ul>
+</div-->
+<div id="homeblock">
+<a href="" id="home"></a>
+</div>
+
+
+</div> <!-- end header block-->
+<div style="background-color:#C5C5C5;text-align:right;height:0px;">
+<div id="bookdiv" style="visibility:hidden;">
+<form id="form2" method="get" action="/">
+<div>
+<select name="rows" id="rows" tabindex="6"><option value="0">Ridu</option><option value="20">20</option><option value="40">40</option><option value="60">60</option><option value="80">80</option><option value="100">100</option></select>
+<input name="bookinput" type="text" id="bookinput" tabindex="7" size="4" maxlength="4" />
+<select name="bookselect" id="bookselect" tabindex="8"><option value="0"></option></select>
+<input name="vaata" type="button" id="bookbutton" value="Vaata" tabindex="9" class="input" />
+</div>
+</form>
+</div>
+</div>
+<!-- dynamic content -->
+<div id="hh1">
+<h1>
+<span id="hh1_sub" style="visibility:hidden;">
+<span id="bookshow" class="peatykid" style="float:right;">
+<span id="bookflow1">
+<span class="c10">&laquo;eelmine</span>,
+<span class="c10">j&auml;rgmine&raquo;</span>&nbsp;
+</span>
+<span id="bookformshow">
+<a href="#" id="bookformlink">raamat</a>&nbsp;
+</span>
+</span>
+<span id="booktitle" class="pealkiri"><!--Esimene Moosese raamat--></span>
+
+<span id="numflow1" class="peatykid" style="clear:both; text-align:right;">
+<span style="padding-right:10%;">
+<span class="d10">«</span>
+<span class="d10">eelmine</span>
+<a class="active b s10" href="#">&nbsp;1</a>
+<span class="d10">järgmine</span>
+<span class="d10">»</span>
+<span id="numflowend" class="d10">peatükk</span>
+</span>
+</span>
+</span>
+</h1>
+</div>
+<div id="waiting" style="height:60px;padding:10px;text-align:center;display:none;position:fixed;"><img height="30" alt="waiting" src="/img/waiting1.gif" /></div>
+<div id="loe">
+<div id="scrolldiv">
+<div id="bibles">
+<!-- div id="bible1" style="width: 20em;position:absolute;">
+<div class="row"><span class="v"><a name="1"></a>1&nbsp;</span>Alguses lõi Jumal taeva ja maa.</div>
+<div class="row"><span class="v"><a name="2"></a>2&nbsp;</span>Maa oli tühi ja paljas ja pimedus oli sügavuse peal ja Jumala Vaim hõljus vete kohal.</div>
+<div class="row"><span class="v"><a name="3"></a>3&nbsp;</span>Ja Jumal ütles: &quot;Saagu valgus!&quot; Ja valgus sai.</div>
+</div -->
+</div>
+</div>
+</div>
+<div id="foot_toolbar" class="toolbar" style="clear:both;">
+<span class="peatykid" style="float:left;margin-left:3.5%">
+<span id="numflow2" class="peatykid" style="clear:both; text-align:right;">
+</span>
+</span>
+</div>
+<!-- dynamic content end -->
+<div id="footer" style="visibility:hidden">
+<div id="copy">&copy; AD 2005-2011 Eesti Piibliselts</div>
+<a href="http://www.eps.ee">www.eps.ee</a><br />
+<a href="http://www.kompass.ee">www.kompass.ee</a>
+<div id="err"></div>
+</div>
+</div>
+<script type="text/javascript" src="inc/script.min.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+var debug=0;
+if(window.location.pathname.match(/debug/)) debug=1;
+var log = function(str){ if(window.debug>0&&console&&console.log){ console.log(str);}};
+if(debug) $script(['index.js','inc/bowser.js','inc/emile.js'], function(){var p=window.net.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+else $script(['index.min.js','inc/bowser.min.js','inc/emile.min.js'], function(){var p=window.net.piibel;p.preload();p.hashstr.poll_hash(0,1);})
+
+var __onenter = function(evt) {
+    evt = (evt) ? evt : event;
+    var a=(evt.currentTarget)?evt.currentTarget:(evt.srcElement)?evt.srcElement:null,
+      b = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode),
+      c=null;
+    if(!a.id){a=(evt.target)?evt.target:(evt.originalTarget)?evt.originalTarget:(evt.srcElement)?evt.srcElement:a;}
+    if (b==27){
+      if((c=$__('bar-menu-01'))){c.style.display='none';}
+      if((c=$__('bar-menu-02'))){c.style.display='none';}
+      if((c=$__('bar-menu-help'))){c.style.display='none';}
+    }
+    else if(b==40){
+      if(!a.id){return !0;}
+      if(a.id.match(/(bar-menu|menulink)-/)){
+        c=$__(a.id.replace('menulink-','bar-menu-'));
+        if(c.style.display=='none'){c.style.display='block';}
+        return false;
+      }
+    }
+    else if (b == 13) { 
+      if(!a.id){return !0;}
+      if(a.id.match('menulink-')){
+        c=$__(a.id.replace('menulink-','bar-menu-'));
+        if(c.style.display=='none'){c.style.display='block';}else{c.style.display='none';}
+        return true;
+      }else if(a.id.match(/^(q|querybutton|bookselect|bookinput|rows|ridasid)$/)){
+        var s=net.piibel.state,c,r='',d;
+        if(a.id.match(/ridasid/)){
+          c=$__('ridasid');
+          if(!c.value){ s.rows=20; }
+          d=s.rows;
+        }else{
+          c=$__('q');
+          d=s.q;
+          if(c.value==c.getAttribute('placeholder')) {c.value='';}
+        }
+        r=c.value;
+        if(r||r!=d){
+          s.page=0;
+          net.piibel.load();
+          return false;
+        }
+      }
+    }
+    return true;
+};
+
+document.onkeypress=function(e){__onenter(e);};
+
+var $___= function(e){
+    var m=e.split(/\./);
+    var l=m.length;
+    if(l>1){
+        log("e:"+e+",l:"+l+",m:"+m);
+        if(l>3&& m[3]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]]&&window[m[0]][m[1]][m[2]][m[3]])?window[m[0]][m[1]][m[2]][m[3]]:null; }
+        else if(l>2&& m[2]){       return (window[m[0]]&&window[m[0]][m[1]]&&window[m[0]][m[1]][m[2]])?window[m[0]][m[1]][m[2]]:null; }
+        else if(l>1 && m[1]){ return (window[m[0]]&&window[m[0]][m[1]])?window[m[0]][m[1]]:null; }
+        else {                return (m[0]&&window[m[0]])?window[m[0]]:null;}
+    }
+    else{ return (typeof(e)==='string')?document.getElementById(e):e; } 
+};
+var c_ = (function(){
+  return function(i,j){
+    var el=i||null;
+    var callback=(typeof(j)==='function')?j:function(){};
+    var interval=0;
+    var a = {
+      init: function() {
+        if($___(el)) {
+          clearInterval(interval);
+          log('We have '+el+'!');
+          callback();
+        }
+      }
+    };
+    log("setinterval: ("+el+"),("+callback+")");
+    interval = setInterval(a.init, 100);
+  };
+})();
+//]]>
+</script>
+</body>
+</html>
